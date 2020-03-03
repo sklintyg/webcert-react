@@ -1,6 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { AppStateProvider, useAppState } from "./app-state";
+import appReducer, { inititalState } from "./appReducer";
 
 function App() {
   return (
@@ -23,4 +25,8 @@ function App() {
   );
 }
 
-export default App;
+export default props => (
+  <AppStateProvider reducer={appReducer} initState={inititalState}>
+    <App />
+  </AppStateProvider>
+);
