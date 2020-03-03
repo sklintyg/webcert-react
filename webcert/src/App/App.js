@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { AppStateProvider, useAppState } from "./app-state";
 import appReducer, { inititalState } from "./appReducer";
 
 function App() {
+  const [appState, appDispatch] = useAppState();
+
+  useEffect(() => {
+    appDispatch({ type: "DEMO_NAME", name: "userName" });
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
