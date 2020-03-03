@@ -33,6 +33,7 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-react-hooks": "^2.5.0"
+    "eslint-plugin-react-hooks": "^2.5.0",
+    "node-sass": "^4.13.1"
   }
 }
