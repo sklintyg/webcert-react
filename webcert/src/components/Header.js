@@ -1,20 +1,11 @@
 import React from "react";
-import logo from "../App/logo.svg";
+import logo from "../Images/webcert_logo.png";
+import styles from "./Header.module.scss";
+
 export function Header() {
   return (
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
+    <header className={styles.container}>
+      <img src={logo} alt="webcert logo" />
     </header>
   );
 }
