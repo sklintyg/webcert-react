@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { AppStateProvider, useAppState } from "./app-state";
 import appReducer, { inititalState } from "./appReducer";
 
