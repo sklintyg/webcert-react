@@ -1,0 +1,20 @@
+.navigation {
+  background-color: #4b566f;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  max-width: 1440px;
+  margin: auto;
+
+}
+
+ul {
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+li {
+  padding: 2px 0;
+    display: inline-block;
+}
