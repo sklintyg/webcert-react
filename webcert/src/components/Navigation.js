@@ -1,5 +1,7 @@
-import React, { lazy, Suspense, useReducer, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Nav from "react-bootstrap/Nav";
+import { LinkContainer } from "react-router-bootstrap";
 
 import styles from "./Navigation.module.scss";
 const About = lazy(() => import("../components/About"));
@@ -10,22 +12,21 @@ export function Navigation() {
   return (
     <Router>
       <div>
-        <nav className={styles.navigation}>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/create">Sök / skriv intyg</Link>
-            </li>
-            <li>
-              <Link to="/enhet-arenden">Ej hanterade ärenden</Link>
-            </li>
-            <li>
-              <Link to="/unsigned">Ej signerade utkast</Link>
-            </li>
-          </ul>
-        </nav>
+        <Nav
+          variant="pills"
+          defaultActiveKey="/create"
+          className={styles.navigation}
+        >
+          <LinkContainer to="/create">
+            <Nav.Link>Sök / skriv intyg</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="enhet-arenden">
+            <Nav.Link>Ej hanterade ärenden</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/unsigned">
+            <Nav.Link>Ej signerade utkast</Nav.Link>
+          </LinkContainer>
+        </Nav>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
