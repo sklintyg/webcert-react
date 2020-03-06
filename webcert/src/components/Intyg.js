@@ -6,7 +6,8 @@ import { ErrorBoundary } from "./ErrorBoundary";
 
 function reducer(state, action) {
   switch (action.type) {
-    case "LOAD_DATA":
+    case "LOAD_PATIENT":
+      console.log("LOAD_PATIENT", action);
       return { ...state, person: action.person };
     default:
       throw new Error(`Unknown action type ${action.type}`);
@@ -14,20 +15,27 @@ function reducer(state, action) {
 }
 export default function Intyg() {
   const [state, dispatch] = useReducer(reducer, {
-    data: {}
+    person: {},
+    intyg: undefined
   });
 
   const webcertMock = new WebcertMock();
-  const { person } = state;
+  const { person, intyg } = state;
   let { id } = useParams();
 
   useEffect(() => {
+    let isCurrent = true;
     if (id && !person) {
       console.log("id,", id);
-      webcertMock
-        .getPatient()
-        .then(data => dispatch({ type: "LOAD_DATA", person: data }));
+
+      webcertMock.getPatient().then(data => {
+        if (isCurrent) {
+          dispatch({ type: "LOAD_PATIENT", person: data });
+        }
+      });
     }
+
+    return () => (isCurrent = false);
   }, [id, webcertMock, person]);
   console.log("person", person);
   return (
