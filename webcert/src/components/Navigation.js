@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -7,11 +8,11 @@ import styles from "./Navigation.module.scss";
 const About = lazy(() => import("../components/About"));
 const ChoosePatient = lazy(() => import("./ChoosePatient"));
 const Intyg = lazy(() => import("./Intyg"));
-
+const Af00213 = lazy(() => import("./Intyg/Af00213"));
 export function Navigation() {
   return (
-    <Router>
-      <div>
+    <Container>
+      <Router>
         <Nav
           variant="pills"
           defaultActiveKey="/create"
@@ -46,10 +47,15 @@ export function Navigation() {
               <About />
             </Suspense>
           </Route>
+          <Route path="/af00213">
+            <Suspense fallback="Läser in data för intyg...">
+              <Af00213 />
+            </Suspense>
+          </Route>
           <Route path="/users">{/* <Users /> */}</Route>
           <Route path="/">{/* <Home /> */}</Route>
         </Switch>
-      </div>
-    </Router>
+      </Router>
+    </Container>
   );
 }
