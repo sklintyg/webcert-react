@@ -9,6 +9,7 @@ const About = lazy(() => import("../components/About"));
 const ChoosePatient = lazy(() => import("./ChoosePatient"));
 const Intyg = lazy(() => import("./Intyg"));
 const Af00213 = lazy(() => import("./Intyg/Af00213"));
+
 export function Navigation() {
   return (
     <Container>
@@ -21,7 +22,7 @@ export function Navigation() {
           <LinkContainer to="/create">
             <Nav.Link>Sök / skriv intyg</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="enhet-arenden">
+          <LinkContainer to="/enhet-arenden">
             <Nav.Link>Ej hanterade ärenden</Nav.Link>
           </LinkContainer>
           <LinkContainer to="/unsigned">
