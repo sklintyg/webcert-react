@@ -21,7 +21,7 @@ export function Navigation() {
           <LinkContainer to="/create">
             <Nav.Link>Sök / skriv intyg</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="enhet-arenden">
+          <LinkContainer to="/enhet-arenden">
             <Nav.Link>Ej hanterade ärenden</Nav.Link>
           </LinkContainer>
           <LinkContainer to="/unsigned">

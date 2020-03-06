@@ -15,7 +15,7 @@ function App() {
   }, [appDispatch]);
 
   return (
-    <div className="App">
+    <div>
       <Header />
       <Navigation />
     </div>
