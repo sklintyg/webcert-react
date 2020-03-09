@@ -101,7 +101,7 @@ export default function Certificate() {
                 {item.name} {item.code}{" "}
                 <span className="text-right">
                   <Button
-                    className={styles.createIntyg}
+                    className={styles.createCertificate}
                     onClick={() =>
                       dispatch({
                         type: "CREATE_CERTIFICATE",
