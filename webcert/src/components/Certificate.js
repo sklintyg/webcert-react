@@ -54,7 +54,7 @@ export default function Certificate() {
   useEffect(() => {
     let isCurrent = true;
     if (id && !certificate) {
-      webcertMock.getIntyg().then(data => {
+      webcertMock.getCertificate().then(data => {
         if (isCurrent) {
           dispatch({ type: "LOAD_CERTIFICATE", certificate: data });
         }
@@ -73,7 +73,7 @@ export default function Certificate() {
 
     if (isLoading && newCertificate) {
       console.log("SKAPA INTYG kod:", newCertificate);
-      webcertMock.createIntyg().then(data => {
+      webcertMock.createCertificate().then(data => {
         console.log("SKAPAT INTYG:", data);
         history.push(`/${newCertificate}/edit/${data.metadata.certificateId}`);
       });

@@ -1,11 +1,11 @@
-import { generateUUID } from "../utils/helpers";
+import { generateUUID } from "../utils/helpers/generateUUID";
 export class WebcertMock {
   getPatient() {
     const data = {
-      fornamn: "TOLVANSSON",
-      mellannamn: "TPU",
-      efternamn: "TOLVAN",
-      personnummer: "191212121212"
+      firstName: "TOLVANSSON",
+      middleName: "TPU",
+      lastName: "TOLVAN",
+      ssn: "191212121212"
     };
     const promise = new Promise(resolve => {
       resolve(data);
@@ -14,7 +14,7 @@ export class WebcertMock {
     return promise;
   }
 
-  getIntyg() {
+  getCertificate() {
     const data = [
       {
         name: "Arbetsförmedlingens medicinska utlåtande",
@@ -45,7 +45,7 @@ export class WebcertMock {
     return promise;
   }
 
-  createIntyg(code) {
+  createCertificate(code) {
     const intygId = generateUUID();
 
     const promise = new Promise(resolve => {
