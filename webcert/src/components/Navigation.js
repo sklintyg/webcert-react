@@ -7,7 +7,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import styles from "./Navigation.module.scss";
 const About = lazy(() => import("../components/About"));
 const ChoosePatient = lazy(() => import("./ChoosePatient"));
-const Intyg = lazy(() => import("./Intyg"));
+const Certificate = lazy(() => import("./Certificate"));
 const Af00213 = lazy(() => import("./Intyg/Af00213"));
 
 export function Navigation() {
@@ -38,9 +38,9 @@ export function Navigation() {
               <ChoosePatient />
             </Suspense>
           </Route>
-          <Route path="/create/choose-intyg-type/:id">
+          <Route path="/create/certificate/:id">
             <Suspense fallback={<p>Laddar data...</p>}>
-              <Intyg />
+              <Certificate />
             </Suspense>
           </Route>
           <Route path="/about">

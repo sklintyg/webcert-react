@@ -29,7 +29,7 @@ export default function ChoosePatient(props) {
       <Form
         onSubmit={e => {
           e.preventDefault();
-          history.push(`/create/choose-intyg-type/${ssn}`);
+          history.push(`/create/certificate/${ssn}`);
         }}
       >
         <Form.Group controlId="formBasicEmail">
