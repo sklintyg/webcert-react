@@ -1,34 +1,38 @@
 import React, { useEffect, useReducer } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import styles from "./Intyg.module.scss";
+import styles from "./Certificate.module.scss";
 import { WebcertMock } from "../Services/WebcertService";
 import WcPageHeader from "./WcPageHeader";
 import { ErrorBoundary } from "./ErrorBoundary";
 
 function reducer(state, action) {
   switch (action.type) {
-    case "CREATE_INTYG":
-      return { ...state, status: action.status, newIntyg: action.newIntyg };
+    case "CREATE_CERTIFICATE":
+      return {
+        ...state,
+        status: action.status,
+        newCertificate: action.newCertificate
+      };
     case "LOAD_PATIENT":
       console.log("LOAD_PATIENT", action);
       return { ...state, person: action.person };
-    case "LOAD_INTYG":
-      return { ...state, intyg: action.intyg };
+    case "LOAD_CERTIFICATE":
+      return { ...state, certificate: action.certificate };
     default:
       throw new Error(`Unknown action type ${action.type}`);
   }
 }
-export default function Intyg() {
+export default function Certificate() {
   const [state, dispatch] = useReducer(reducer, {
     person: {},
-    intyg: undefined,
+    certificate: undefined,
     status: "idle",
-    newIntyg: undefined
+    newCertificate: undefined
   });
 
   const webcertMock = new WebcertMock();
-  const { person, intyg, status, newIntyg } = state;
+  const { person, certificate, status, newCertificate } = state;
   let { id } = useParams();
   let history = useHistory();
 
@@ -49,18 +53,16 @@ export default function Intyg() {
 
   useEffect(() => {
     let isCurrent = true;
-    if (id && !intyg) {
-      console.log("id,", id);
-
+    if (id && !certificate) {
       webcertMock.getIntyg().then(data => {
         if (isCurrent) {
-          dispatch({ type: "LOAD_INTYG", intyg: data });
+          dispatch({ type: "LOAD_CERTIFICATE", certificate: data });
         }
       });
     }
 
     return () => (isCurrent = false);
-  }, [id, webcertMock, intyg]);
+  }, [id, webcertMock, certificate]);
 
   useEffect(() => {
     let isCurrent = true;
@@ -69,16 +71,16 @@ export default function Intyg() {
     const isSuccess = status === "success";
     const isError = status === "error";
 
-    if (isLoading && newIntyg) {
-      console.log("SKAPA INTYG kod:", newIntyg);
+    if (isLoading && newCertificate) {
+      console.log("SKAPA INTYG kod:", newCertificate);
       webcertMock.createIntyg().then(data => {
         console.log("SKAPAT INTYG:", data);
-        history.push(`/${newIntyg}/edit/${data.metadata.intygId}`);
+        history.push(`/${newCertificate}/edit/${data.metadata.certificateId}`);
       });
     }
 
     return () => (isCurrent = false);
-  }, [status, newIntyg, webcertMock]);
+  }, [status, newCertificate, webcertMock, history]);
 
   console.log("person", person);
   return (
@@ -91,10 +93,10 @@ export default function Intyg() {
           efternamn={person?.efternamn}
           personnummer={person?.personnummer}
         />
-        <h2>Skapa intyg</h2>
+        <h2>Skapa certificate</h2>
         <ul>
-          {intyg &&
-            intyg.map((item, index) => (
+          {certificate &&
+            certificate.map((item, index) => (
               <li key={index}>
                 {item.name} {item.code}{" "}
                 <span className="text-right">
@@ -102,9 +104,9 @@ export default function Intyg() {
                     className={styles.createIntyg}
                     onClick={() =>
                       dispatch({
-                        type: "CREATE_INTYG",
+                        type: "CREATE_CERTIFICATE",
                         status: "loading",
-                        newIntyg: item.code
+                        newCertificate: item.code
                       })
                     }
                   >
