@@ -15,8 +15,7 @@ function reducer(state, action) {
         newCertificate: action.newCertificate
       };
     case "LOAD_PATIENT":
-      console.log("LOAD_PATIENT", action);
-      return { ...state, person: action.person };
+      return { ...state, patient: action.patient };
     case "LOAD_CERTIFICATE":
       return { ...state, certificate: action.certificate };
     default:
@@ -25,31 +24,31 @@ function reducer(state, action) {
 }
 export default function Certificate() {
   const [state, dispatch] = useReducer(reducer, {
-    person: {},
+    patient: undefined,
     certificate: undefined,
     status: "idle",
     newCertificate: undefined
   });
 
   const webcertMock = new WebcertMock();
-  const { person, certificate, status, newCertificate } = state;
+  const { patient, certificate, status, newCertificate } = state;
   let { id } = useParams();
   let history = useHistory();
 
+  // load patient details
   useEffect(() => {
     let isCurrent = true;
-    if (id && !person) {
-      console.log("id,", id);
 
+    if (id && !patient) {
       webcertMock.getPatient().then(data => {
         if (isCurrent) {
-          dispatch({ type: "LOAD_PATIENT", person: data });
+          dispatch({ type: "LOAD_PATIENT", patient: data });
         }
       });
     }
 
     return () => (isCurrent = false);
-  }, [id, webcertMock, person]);
+  }, [id, patient, webcertMock]);
 
   useEffect(() => {
     let isCurrent = true;
@@ -72,26 +71,26 @@ export default function Certificate() {
     const isError = status === "error";
 
     if (isLoading && newCertificate) {
-      console.log("SKAPA INTYG kod:", newCertificate);
       webcertMock.createCertificate().then(data => {
-        console.log("SKAPAT INTYG:", data);
-        history.push(`/${newCertificate}/edit/${data.metadata.certificateId}`);
+        history.push(
+          `/certificate/${newCertificate}/${data.metadata.certificateId}`
+        );
       });
     }
 
     return () => (isCurrent = false);
   }, [status, newCertificate, webcertMock, history]);
 
-  console.log("person", person);
+  console.log("patient", patient);
   return (
     <>
       <ErrorBoundary>
         <h1>Intyg</h1>
         <WcPageHeader
-          fornamn={person?.fornamn}
-          mellannamn={person?.mellannamn}
-          efternamn={person?.efternamn}
-          personnummer={person?.personnummer}
+          firstName={patient?.firstName}
+          middleName={patient?.middleName}
+          lastName={patient?.lastName}
+          ssn={patient?.ssn}
         />
         <h2>Skapa certificate</h2>
         <ul>
