@@ -5,10 +5,11 @@ import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 
 import styles from "./Navigation.module.scss";
+
 const About = lazy(() => import("../components/About"));
 const ChoosePatient = lazy(() => import("./ChoosePatient"));
 const Certificate = lazy(() => import("./Certificate"));
-const Af00213 = lazy(() => import("./Intyg/Af00213"));
+const CertificateForm = lazy(() => import("./Certificates/CertificateForm"));
 
 export function Navigation() {
   return (
@@ -48,9 +49,9 @@ export function Navigation() {
               <About />
             </Suspense>
           </Route>
-          <Route path="/af00213">
+          <Route path="/certificate/:certificateId/:id">
             <Suspense fallback="Läser in data för intyg...">
-              <Af00213 />
+              <CertificateForm />
             </Suspense>
           </Route>
           <Route path="/users">{/* <Users /> */}</Route>
