@@ -1,4 +1,4 @@
-import { generateUUID } from "../utils/helpers/generateUUID";
+import { generateUUID } from "../utils/helpers";
 export class WebcertMock {
   getPatient() {
     const data = {
@@ -45,22 +45,35 @@ export class WebcertMock {
     return promise;
   }
 
-  createCertificate(code) {
-    const intygId = generateUUID();
+  createCertificate(certificateCode) {
+    const certificateId = generateUUID();
 
     const promise = new Promise(resolve => {
       const data = {
         metadata: {
-          intygCode: code,
-          intygId: intygId
+          certificateCode,
+          certificateId
         },
         fields: [
           {
             title: "Funktionsnedsättning",
             name: "funktionsnedsattning",
-            type: "radio"
+            type: "CHECKBOX",
+            header: "Funktionsnedsättning",
+            label: "Ja",
+            text:
+              "Finns besvär på grund av sjukdom eller skada som medför funktionsnedsättning?",
+            defaultValue: false
           }
-        ]
+        ],
+        data: {
+          funktionsnedsattning: false,
+          funktionsnedsattningDesc: "",
+          utredningBehandling: false,
+          utredningBehandlingDesc: "",
+          arbetePaverkanSjukdomSkada: false,
+          arbetePaverkanSjukdomSkadaDesc: ""
+        }
       };
 
       resolve(data);
