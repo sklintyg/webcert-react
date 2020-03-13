@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
 
-import styles from "./Af00213.module.scss";
+import styles from "./Certificates.module.scss";
 
 const INIT_STATE = {
   data: {
