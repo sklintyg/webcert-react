@@ -3,14 +3,13 @@ import React from "react";
 import styles from "./WcPageheader.module.scss";
 import { formatPersonnr } from "../utils/helpers";
 export default function WcPageHeader(props) {
-  console.log("WcPageHeader:", props);
   return (
     <>
       <div className={styles.wcPageHeader}>
         <h2>patientuppgifter</h2>
         <h3>
-          {props.fornamn} {props.mellannamn} {props.efternamn} -{" "}
-          {formatPersonnr(props.personnummer)}
+          {props.firstName} {props.middleName} {props.lastName} -{" "}
+          {formatPersonnr(props.ssn)}
         </h3>
       </div>
       {/* <div className={styles.WcPageHeader}>
