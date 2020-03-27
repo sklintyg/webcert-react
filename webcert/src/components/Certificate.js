@@ -16,8 +16,12 @@ function reducer(state, action) {
       };
     case "LOAD_PATIENT":
       return { ...state, patient: action.patient };
-    case "LOAD_CERTIFICATE":
-      return { ...state, certificate: action.certificate };
+    case "LOAD_CERTIFICATES":
+      return { ...state, certificates: action.certificates };
+    case "LOAD_CURRENT_CERTIFICATES":
+      return { ...state, currentCertificates: action.currentCertificates.data };
+    case "OPEN_CERTIFICATE":
+      return { ...state };
     default:
       throw new Error(`Unknown action type ${action.type}`);
   }
@@ -25,13 +29,20 @@ function reducer(state, action) {
 export default function Certificate() {
   const [state, dispatch] = useReducer(reducer, {
     patient: undefined,
-    certificate: undefined,
+    certificates: undefined,
     status: "idle",
-    newCertificate: undefined
+    newCertificate: undefined,
+    currentCertificates: undefined
   });
 
   const webcertMock = new WebcertMock();
-  const { patient, certificate, status, newCertificate } = state;
+  const {
+    patient,
+    certificates,
+    status,
+    newCertificate,
+    currentCertificates
+  } = state;
   let { id } = useParams();
   let history = useHistory();
 
@@ -52,16 +63,37 @@ export default function Certificate() {
 
   useEffect(() => {
     let isCurrent = true;
-    if (id && !certificate) {
-      webcertMock.getCertificate().then(data => {
+    if (id && !certificates) {
+      webcertMock.getCertificates().then(data => {
         if (isCurrent) {
-          dispatch({ type: "LOAD_CERTIFICATE", certificate: data });
+          dispatch({ type: "LOAD_CERTIFICATES", certificates: data });
         }
       });
     }
 
     return () => (isCurrent = false);
-  }, [id, webcertMock, certificate]);
+  }, [id, webcertMock, certificates]);
+
+  useEffect(() => {
+    let isCurrent = true;
+    function getCurrentCertificates() {
+      webcertMock.getCurrentCertificates().then(response => {
+        console.log("current certs:", response);
+        if (isCurrent) {
+          dispatch({
+            type: "LOAD_CURRENT_CERTIFICATES",
+            currentCertificates: response
+          });
+        }
+      });
+    }
+
+    if (!currentCertificates) {
+      getCurrentCertificates();
+    }
+
+    return () => (isCurrent = false);
+  }, [webcertMock, currentCertificates]);
 
   useEffect(() => {
     let isCurrent = true;
@@ -94,8 +126,8 @@ export default function Certificate() {
         />
         <h2>Skapa certificate</h2>
         <ul>
-          {certificate &&
-            certificate.map((item, index) => (
+          {certificates &&
+            certificates.map((item, index) => (
               <li key={index}>
                 {item.name} {item.code}{" "}
                 <span className="text-right">
@@ -117,6 +149,28 @@ export default function Certificate() {
         </ul>
 
         <h2>Tidigare intyg</h2>
+        <ul>
+          {currentCertificates &&
+            currentCertificates.map((item, index) => (
+              <li key={index}>
+                {item.metadata.certificateName} {item.metadata.certificateCode}{" "}
+                <span className="text-right">
+                  <Button
+                    className={styles.createCertificate}
+                    onClick={() =>
+                      dispatch({
+                        type: "OPEN_CERTIFICATE",
+                        status: "loading",
+                        newCertificate: item.code
+                      })
+                    }
+                  >
+                    Öppna
+                  </Button>
+                </span>
+              </li>
+            ))}
+        </ul>
       </ErrorBoundary>
     </>
   );
