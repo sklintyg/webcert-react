@@ -7,6 +7,9 @@ import { LinkContainer } from "react-router-bootstrap";
 import styles from "./Navigation.module.scss";
 
 const About = lazy(() => import("../components/About"));
+const DynamicForm = lazy(() =>
+  import("../components/Certificates/DynamicForm")
+);
 const ChoosePatient = lazy(() => import("./ChoosePatient"));
 const Certificate = lazy(() => import("./Certificate"));
 const CertificateForm = lazy(() => import("./Certificates/CertificateForm"));
@@ -29,6 +32,9 @@ export function Navigation() {
           <LinkContainer to="/unsigned">
             <Nav.Link>Ej signerade utkast</Nav.Link>
           </LinkContainer>
+          <LinkContainer to="/about">
+            <Nav.Link>TEST</Nav.Link>
+          </LinkContainer>
         </Nav>
 
         {/* A <Switch> looks through its children <Route>s and
@@ -46,10 +52,10 @@ export function Navigation() {
           </Route>
           <Route path="/about">
             <Suspense fallback={<p>Laddar data...</p>}>
-              <About />
+              <DynamicForm />
             </Suspense>
           </Route>
-          <Route path="/certificate/:certificateId/:id">
+          <Route path="/certificate/:certificateCode/:id">
             <Suspense fallback="Läser in data för intyg...">
               <CertificateForm />
             </Suspense>
