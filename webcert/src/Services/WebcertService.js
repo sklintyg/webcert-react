@@ -78,6 +78,230 @@ export class WebcertMock {
     return promise;
   }
 
+  createOneLevelData(certificateCode) {
+    const data = {
+      metadata: {
+        certificateCode: "af00213",
+        certificateId: "bed26d3e-7112-4f08-98bf-01be40e26c80",
+        certificateName: "Arbetsförmedlingens medicinska utlåtande"
+      },
+      categories: [
+        {
+          id: "funktionsnedsattning",
+          parent: null,
+          config: {
+            text: "Funktionsnedsättning",
+            description: null,
+            component: "category"
+          }
+        },
+        {
+          id: "1",
+          parent: "funktionsnedsattning",
+          config: {
+            text:
+              "Finns besvär på grund av sjukdom eller skada som medför funktionsnedsättning?",
+            description: "",
+            component: "ue-radio"
+          },
+          data: {
+            harFunktionsnedsattning: null
+          },
+          validation: {
+            required: true,
+            requiredProp: "harFunktionsnedsattning"
+          }
+        },
+        {
+          id: "1.1",
+          parent: "1",
+          config: {
+            text:
+              "Beskriv de funktionsnedsättningar som har observerats (undersökningsfynd). Ange, om möjligt, varaktighet.",
+            description: "",
+            component: "ue-textarea"
+          },
+          data: {
+            funktionsnedsattning: null
+          },
+          validation: {
+            required: true,
+            requiredProp: "funktionsnedsattning",
+            hideExpression: "!harFunktionsnedsattning"
+          }
+        },
+        {
+          id: "aktivitetsbegransning",
+          parent: null,
+          config: {
+            text: "Aktivitetsbegränsning",
+            description: null,
+            component: "category"
+          },
+          validation: {
+            hideExpression: "!model.harFunktionsnedsattning"
+          }
+        },
+        {
+          id: "2",
+          parent: "aktivitetsbegransning",
+          config: {
+            text:
+              "Leder funktionsnedsättningarna till aktivitetsbegränsningar i relation till arbete eller studier?",
+            description: "",
+            component: "ue-radio"
+          },
+          data: {
+            harAktivitetsbegransning: null
+          },
+          validation: {
+            required: true,
+            requiredProp: "harAktivitetsbegransning"
+          }
+        },
+        {
+          id: "2.1",
+          parent: "2",
+          config: {
+            text:
+              "Ange vilka aktivitetsbegränsningar? Ange hur och om möjligt varaktighet/prognos.",
+            description: "",
+            component: "ue-textarea"
+          },
+          data: {
+            aktivitetsbegransning: null
+          },
+          validation: {
+            required: true,
+            requiredProp: "aktivitetsbegransning",
+            hideExpression: "!harAktivitetsbegransning"
+          }
+        },
+        {
+          id: "utredningBehandling",
+          parent: null,
+          config: {
+            text: "Utredning och behandling",
+            description: null,
+            component: "category"
+          },
+          validation: {
+            hideExpression: null
+          }
+        },
+        {
+          id: "3",
+          parent: "utredningBehandling",
+          config: {
+            text:
+              "Finns pågående eller planerade utredningar/behandlingar som påverkar den planering som Arbetsförmedlingen har beskrivit i förfrågan?",
+            description: "",
+            component: "ue-radio"
+          },
+          data: {
+            harUtredningBehandling: null
+          },
+          validation: {
+            required: true,
+            requiredProp: "harUtredningBehandling"
+          }
+        },
+        {
+          id: "3.1",
+          parent: "3",
+          config: {
+            text:
+              "Hur påverkar utredningarna/behandlingarna planeringen? När planeras utredningarna/behandlingarna att vara avslutade?\n",
+            description: "",
+            component: "ue-textarea"
+          },
+          data: {
+            utredningBehandling: null
+          },
+          validation: {
+            required: true,
+            requiredProp: "utredningBehandling",
+            hideExpression: "!harUtredningBehandling"
+          }
+        },
+        {
+          id: "arbetetsPaverkan",
+          parent: null,
+          config: {
+            text: "Arbetets påverkan på sjukdom/skada",
+            description: null,
+            component: "category"
+          },
+          validation: {
+            hideExpression: null
+          }
+        },
+        {
+          id: "4",
+          parent: "arbetetsPaverkan",
+          config: {
+            text:
+              "Kan sjukdomen/skadan förvärras av vissa arbetsuppgifter/arbetsmoment?",
+            description: "",
+            component: "ue-radio"
+          },
+          data: {
+            harArbetetsPaverkan: null
+          },
+          validation: {
+            required: true,
+            requiredProp: "harArbetetsPaverkan"
+          }
+        },
+        {
+          id: "4.1",
+          parent: "4",
+          config: {
+            text: "Vilken typ av arbetsuppgifter/arbetsmoment?",
+            description: "",
+            component: "ue-textarea"
+          },
+          data: {
+            arbetetsPaverkan: null
+          },
+          validation: {
+            required: true,
+            requiredProp: "arbetetsPaverkan",
+            hideExpression: "!harArbetetsPaverkan"
+          }
+        },
+        {
+          id: "ovrigt",
+          config: {
+            text: "Övrigt",
+            description: null,
+            component: "category"
+          },
+          validation: {
+            hideExpression: null
+          }
+        },
+        {
+          id: "5",
+          parent: "ovrigt",
+          config: {
+            text: "Övrigt som Arbetsförmedlingen bör känna till?",
+            description: "",
+            component: "ue-textarea"
+          },
+          data: {
+            ovrigt: null
+          },
+          validation: {
+            required: false
+          }
+        }
+      ]
+    };
+
+    return Promise.resolve(data);
+  }
+
   saveData(id, data, metadata) {
     debugger;
     const webcertData = localStorage.getItem("webcert");
