@@ -8,14 +8,21 @@ import { WebcertMock } from "../../Services/WebcertService";
 
 import { Check } from "../shared/Check";
 
-const Af00213 = lazy(() => import("./Af00213"));
+const AF00213 = lazy(() => import("./AF00213"));
+const FK7804 = lazy(() => import("./FK7804"));
 
 function renderCert(certificateId) {
   switch (certificateId) {
     case "AF00213":
       return (
         <React.Suspense fallback={<p>Laddar data...</p>}>
-          <Af00213 />
+          <AF00213 />
+        </React.Suspense>
+      );
+    case "FK7804":
+      return (
+        <React.Suspense fallback={<p>Laddar data...</p>}>
+          <FK7804 />
         </React.Suspense>
       );
     default:
