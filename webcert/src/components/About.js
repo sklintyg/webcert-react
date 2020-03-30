@@ -8,7 +8,6 @@ export default function About() {
 
   const { name } = appState;
 
-  console.log("name in About:", name);
   return (
     <ErrorBoundary>
       <div>

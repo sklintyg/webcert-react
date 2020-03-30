@@ -1,15 +1,11 @@
 import React, { useReducer, useEffect, lazy } from "react";
-import Card from "react-bootstrap/Card";
+
 import Button from "react-bootstrap/Button";
 
 import { useParams } from "react-router-dom";
 
 import styles from "./Certificates.module.scss";
 import { WebcertMock } from "../../Services/WebcertService";
-
-import { Check } from "../shared/Check";
-import { Radio } from "../shared/Radio";
-import { Textfield } from "../shared/Textfield";
 
 const YesNoComment = lazy(() => import("./SubQuestion/YesNoComment"));
 const AF00213 = lazy(() => import("./AF00213"));
@@ -147,6 +143,7 @@ export default function DynamicForm() {
     <div>
       {elements}
       <Button
+        type="submit"
         disable={status === "loading"}
         onClick={() => dispatch({ type: "SUBMIT", status: "loading" })}
       >
