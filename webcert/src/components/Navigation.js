@@ -52,10 +52,10 @@ export function Navigation() {
           </Route>
           <Route path="/about">
             <Suspense fallback={<p>Laddar data...</p>}>
-              <DynamicForm />
+              <CertificateForm />
             </Suspense>
           </Route>
-          <Route path="/certificate/:certificateCode/:id">
+          <Route path="/certificate/:certificateCode/:certificateId">
             <Suspense fallback="Läser in data för intyg...">
               <CertificateForm />
             </Suspense>
