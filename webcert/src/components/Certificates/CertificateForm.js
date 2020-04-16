@@ -1,115 +1,67 @@
-import React, { useReducer, useEffect, lazy } from "react";
-import Button from "react-bootstrap/Button";
+import React, { lazy, useReducer, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 
 import styles from "./Certificates.module.scss";
 import { WebcertMock } from "../../Services/WebcertService";
 
-import { Check } from "../shared/Check";
+const AF00213 = lazy(() => import("./AF00213" /*webpackChunkName: "af00213"*/));
 
-const AF00213 = lazy(() => import("./AF00213"));
-const FK7804 = lazy(() => import("./FK7804"));
-
-function renderCert(certificateId) {
-  switch (certificateId) {
+function _renderCertificate(certificateCode, certificateId) {
+  switch (certificateCode) {
     case "AF00213":
-      return (
-        <React.Suspense fallback={<p>Laddar data...</p>}>
-          <AF00213 />
-        </React.Suspense>
-      );
-    case "FK7804":
-      return (
-        <React.Suspense fallback={<p>Laddar data...</p>}>
-          <FK7804 />
-        </React.Suspense>
-      );
+      return <AF00213 />;
     default:
       return null;
   }
 }
 
-function renderElement(item, data, dispatch, index) {
-  switch (item.type) {
-    case "CHECKBOX":
-      return (
-        <Check
-          value={data[item.name]}
-          dispatch={dispatch}
-          update={data =>
-            dispatch({ type: "UPDATE", name: item.name, value: data.value })
-          }
-          label={item.label}
-          id={`${index}-${item.name}`}
-          key={`${index}-${item.name}`}
-        />
-      );
-    default:
-      return;
-  }
-}
-
 function reducer(state, action) {
-  let { data } = state;
+  let { certificateData } = state;
   switch (action.type) {
     case "LOAD_CERTIFICATE":
-      return { ...state, certElement: action.certElement };
+      return { ...state, certificateElement: action.certificateElement };
     case "LOAD_DATA":
-      return { ...state, data: action.data, elements: action.elements };
+      return { ...state, certificateData: action.certificateData };
     case "SUBMIT":
       return { ...state };
     case "UPDATE":
-      data[action.name] = action.value;
-      return { ...state, data };
+      certificateData[action.name] = action.value;
+      return { ...state, certificateData };
     default:
       throw new Error(`Unknown action type: ${action.type}`);
   }
 }
-export default function CertificateForm() {
-  let { certificateId, id } = useParams();
 
-  const [state, dispatch] = useReducer(reducer, {
-    data: {},
-    elements: null,
-    certElement: null
-  });
-  const { data, certElement } = state;
+const INIT_STATE = {
+  certificateData: undefined,
+  certificateElement: null,
+};
+
+export default function CertificateForm() {
+  let { certificateCode, certificateId } = useParams();
+  console.log(
+    "certifcateCode:",
+    certificateCode,
+    "certificateId:",
+    certificateId
+  );
+
+  const [state, dispatch] = useReducer(reducer, INIT_STATE);
+
+  const { certificateData, certificateElement } = state;
   const webcertService = new WebcertMock();
 
   useEffect(() => {
-    if (certificateId) {
-      const element = renderCert(certificateId);
-
-      dispatch({ type: "LOAD_CERTIFICATE", certElement: element });
+    function renderCertificate() {
+      const certElement = _renderCertificate(certificateCode, certificateId);
+      dispatch({ type: "LOAD_CERTIFICATE", certificateElement: certElement });
     }
-  }, [certificateId, dispatch]);
-  // useEffect(() => {
-  //   console.log("data:", data);
-  //   let isCurrent = true;
 
-  //   if (certificateId && !elements) {
-  //     webcertService.createCertificate(certificateId).then(response => {
-  //       if (isCurrent) {
-  //         const fields = response.fields;
+    if (certificateCode) {
+      renderCertificate();
+    }
+  }, [certificateCode]);
 
-  //         const createElements = fields.map((item, index) => (
-  //           <Card className={styles.card}>
-  //             <Card.Header>{item.header}</Card.Header>
-  //             <Card.Text>{item.text}</Card.Text>
-  //             {renderElement(item, data[item.name], dispatch, index)}
-  //           </Card>
-  //         ));
-  //         dispatch({
-  //           type: "LOAD_DATA",
-  //           data: response.data,
-  //           elements: createElements
-  //         });
-  //       }
-  //     });
-  //   }
-  //   return () => (isCurrent = false);
-  // }, [data, webcertService, elements, certificateId]);
-
-  return <div>{certElement}</div>;
+  return <div>{certificateElement}</div>;
 }
