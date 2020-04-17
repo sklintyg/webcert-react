@@ -6,10 +6,6 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import styles from "./Navigation.module.scss";
 
-const About = lazy(() => import("../components/About"));
-const DynamicForm = lazy(() =>
-  import("../components/Certificates/DynamicForm")
-);
 const ChoosePatient = lazy(() => import("./ChoosePatient"));
 const Certificate = lazy(() => import("./Certificate"));
 const CertificateForm = lazy(() => import("./Certificates/CertificateForm"));
