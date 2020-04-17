@@ -7,15 +7,16 @@ import { useParams } from "react-router-dom";
 import styles from "./Certificates.module.scss";
 
 import { UeRadio } from "../shared/UeRadio";
+import UeDetails from "../shared/UeDetails";
 import { WebcertMock } from "../../Services/WebcertService";
 
 function _renderQuestions(category, dispatch) {
-  const elements = category.questions.map((question, index) => {
+  let elements = category.questions.map((question, index) => {
     switch (question.config.component) {
       case "ue-radio":
         return (
           <UeRadio
-            key={`element${index}`}
+            key={`UeRadioElement${index}`}
             name={question.config.dataName}
             value={question.data[question.config.dataName]}
             update={(value) =>
@@ -28,10 +29,29 @@ function _renderQuestions(category, dispatch) {
             }
           />
         );
+      case "ue-textarea":
+        return null;
+        // return (
+        //   <UeDetails
+        //     key={`UeDetailsElement${index}`}
+        //     label={question.config.text}
+        //     value={question.data[question.config.dataName]}
+        //     update={(value) =>
+        //       dispatch({
+        //         type: "UPDATE",
+        //         index,
+        //         name: question.config.dataName,
+        //         value,
+        //       })
+        //     }
+        //   />
+        // );
+        break;
       default:
         return null;
     }
   });
+
   return elements;
 }
 
@@ -108,10 +128,12 @@ export default function DynamicForm() {
     let isCurrent = true;
     function createCertificateElements() {
       const elements = categories.map((category, index) => {
+        // const questions = _renderQuestions(category, dispatch);
+
         return (
           <Card className={styles.card} key={`category${index}`}>
             <Card.Header>{category.config.text}</Card.Header>
-            {_renderQuestions(category, dispatch)}
+            {/* {questions} */}
           </Card>
         );
       });
