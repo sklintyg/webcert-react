@@ -603,6 +603,7 @@ function _getData(certificateCode, certificateId) {
                     "Beskriv de funktionsnedsättningar som har observerats (undersökningsfynd). Ange, om möjligt, varaktighet.",
                   description: "",
                   component: "ue-textarea",
+                  dataName: "funktionsnedsattning",
                 },
                 data: {
                   funktionsnedsattning: null,
@@ -636,6 +637,7 @@ function _getData(certificateCode, certificateId) {
                     "Leder funktionsnedsättningarna till aktivitetsbegränsningar i relation till arbete eller studier?",
                   description: "",
                   component: "ue-radio",
+                  dataName: "harAktivitetsbegransning",
                 },
                 data: {
                   harAktivitetsbegransning: null,
@@ -653,6 +655,7 @@ function _getData(certificateCode, certificateId) {
                     "Ange vilka aktivitetsbegränsningar? Ange hur och om möjligt varaktighet/prognos.",
                   description: "",
                   component: "ue-textarea",
+                  dataName: "aktivitetsbegransning",
                 },
                 data: {
                   aktivitetsbegransning: null,
@@ -686,6 +689,7 @@ function _getData(certificateCode, certificateId) {
                     "Finns pågående eller planerade utredningar/behandlingar som påverkar den planering som Arbetsförmedlingen har beskrivit i förfrågan?",
                   description: "",
                   component: "ue-radio",
+                  dataName: "harUtredningBehandling",
                 },
                 data: {
                   harUtredningBehandling: null,
@@ -703,6 +707,7 @@ function _getData(certificateCode, certificateId) {
                     "Hur påverkar utredningarna/behandlingarna planeringen? När planeras utredningarna/behandlingarna att vara avslutade?\n",
                   description: "",
                   component: "ue-textarea",
+                  dataName: "utredningBehandling",
                 },
                 data: {
                   utredningBehandling: null,
@@ -736,6 +741,7 @@ function _getData(certificateCode, certificateId) {
                     "Kan sjukdomen/skadan förvärras av vissa arbetsuppgifter/arbetsmoment?",
                   description: "",
                   component: "ue-radio",
+                  dataName: "harArbetetsPaverkan",
                 },
                 data: {
                   harArbetetsPaverkan: null,
@@ -752,6 +758,7 @@ function _getData(certificateCode, certificateId) {
                   text: "Vilken typ av arbetsuppgifter/arbetsmoment?",
                   description: "",
                   component: "ue-textarea",
+                  dataName: "arbetetsPaverkan",
                 },
                 data: {
                   arbetetsPaverkan: null,
@@ -783,6 +790,7 @@ function _getData(certificateCode, certificateId) {
                   text: "Övrigt som Arbetsförmedlingen bör känna till?",
                   description: "",
                   component: "ue-textarea",
+                  dataName: "ovrigt",
                 },
                 data: {
                   ovrigt: null,
